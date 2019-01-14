@@ -39,14 +39,17 @@ namespace Czar.IdentityServer4.Stores.SqlServer
             {
                 string sql = @"select * from ApiResources where Name=@Name and Enabled=1;
                        select * from ApiResources t1 inner join ApiScopes t2 on t1.Id=t2.ApiResourceId where t1.Name=@name and Enabled=1;
+;                      select * from ApiResources t1 inner join ApiSecrets t2 on t1.Id=t2.ApiResourceId where t1.Name=@name and Enabled=1;
                     ";
                 var multi = await connection.QueryMultipleAsync(sql, new { name });
                 var ApiResources = multi.Read<Entities.ApiResource>();
                 var ApiScopes = multi.Read<Entities.ApiScope>();
+                var ApiSecret = multi.Read<Entities.ApiSecret>();
                 if (ApiResources != null && ApiResources.AsList()?.Count > 0)
                 {
                     var apiresource = ApiResources.AsList()[0];
                     apiresource.Scopes = ApiScopes.AsList();
+                    apiresource.Secrets = ApiSecret.AsList();
                     if (apiresource != null)
                     {
                         _logger.LogDebug("Found {api} API resource in database", name);

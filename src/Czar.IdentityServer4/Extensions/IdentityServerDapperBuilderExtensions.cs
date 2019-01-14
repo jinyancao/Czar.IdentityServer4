@@ -6,6 +6,12 @@ using Czar.IdentityServer4.Interfaces;
 using Czar.IdentityServer4.HostedServices;
 using Microsoft.Extensions.Hosting;
 using Czar.IdentityServer4.Stores.MySql;
+using IdentityServer4.ResponseHandling;
+using Czar.IdentityServer4.ResponseHandling;
+using IdentityServer4.Services;
+using Czar.IdentityServer4.Caches;
+using IdentityServer4.Validation;
+using Czar.IdentityServer4.Validation;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -35,6 +41,9 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.Services.AddTransient<IPersistedGrants, SqlServerPersistedGrants>();
             builder.Services.AddSingleton<TokenCleanup>();
             builder.Services.AddSingleton<IHostedService, TokenCleanupHost>();
+            builder.Services.AddSingleton<ITokenResponseGenerator, CzarTokenResponseGenerator>();
+            builder.Services.AddTransient(typeof(ICache<>), typeof(CzarRedisCache<>));
+            builder.Services.AddTransient<IIntrospectionRequestValidator, CzarIntrospectionRequestValidator>();
             return builder;
         }
 

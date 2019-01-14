@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Czar.IdentityServer4.Options
 {
     /// <summary>
@@ -18,11 +20,19 @@ namespace Czar.IdentityServer4.Options
         /// </summary>
         public int TokenCleanupInterval { get; set; } = 3600;
 
-
         /// <summary>
         /// 连接字符串
         /// </summary>
         public string DbConnectionStrings { get; set; }
 
+        /// <summary>
+        /// 是否启用强制过期策略,默认不开启
+        /// </summary>
+        public bool EnableForceExpire { get; set; } = false;
+
+        /// <summary>
+        /// Redis缓存连接
+        /// </summary>
+        public List<string> RedisConnectionStrings { get; set; }
     }
 }

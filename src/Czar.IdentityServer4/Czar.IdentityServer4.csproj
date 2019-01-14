@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="CSRedisCore" Version="3.0.31" />
     <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="IdentityServer4" Version="2.3.2" />
     <PackageReference Include="MySql.Data" Version="8.0.13" />
